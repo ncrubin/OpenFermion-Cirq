@@ -40,8 +40,10 @@ def test_givens_inverse():
     b = numpy.random.random() + 1j * numpy.random.random()
     ab_rotation = givens_matrix_elements(a, b, which='right')
 
-    assert numpy.allclose(ab_rotation.dot(numpy.conj(ab_rotation).T), numpy.eye(2))
-    assert numpy.allclose(numpy.conj(ab_rotation).T.dot(ab_rotation), numpy.eye(2))
+    assert numpy.allclose(ab_rotation.dot(numpy.conj(ab_rotation).T),
+                          numpy.eye(2))
+    assert numpy.allclose(numpy.conj(ab_rotation).T.dot(ab_rotation),
+                          numpy.eye(2))
 
 
 def test_row_eliminate():
