@@ -20,7 +20,7 @@ from openfermion.ops import QubitOperator, FermionOperator
 from openfermion.transforms import jordan_wigner, get_sparse_operator
 
 from openfermioncirq.primitives.optimal_givens_decomposition import \
-    front_and_back_givens_decomposition
+    optimal_givens_decomposition
 
 
 def test_givens_inverse():
@@ -189,7 +189,7 @@ def test_circuit_generation_and_accuracy():
 
         unitary = scipy.linalg.expm(u_generator)
         circuit = cirq.Circuit()
-        circuit.append(front_and_back_givens_decomposition(qubits, unitary))
+        circuit.append(optimal_givens_decomposition(qubits, unitary))
 
         fermion_generator = QubitOperator(()) * 0.0
         for i, j in product(range(dim), repeat=2):
@@ -226,7 +226,7 @@ def test_circuit_generation_state():
     u_generator = u_generator - numpy.conj(u_generator).T
     unitary = scipy.linalg.expm(u_generator)
 
-    circuit.append(front_and_back_givens_decomposition(qubits[:2], unitary))
+    circuit.append(optimal_givens_decomposition(qubits[:2], unitary))
 
     fermion_generator = QubitOperator(()) * 0.0
     for i, j in product(range(dim), repeat=2):
