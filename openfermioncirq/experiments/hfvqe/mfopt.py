@@ -1,9 +1,10 @@
+# pylint: disable=C
 from typing import Callable, List, Optional, Tuple
+from itertools import product
 import time
 import numpy as np
 import scipy as sp
 from scipy.optimize import OptimizeResult
-from itertools import product
 
 from openfermion.transforms import get_interaction_operator
 from openfermion.ops import FermionOperator, InteractionRDM
@@ -13,7 +14,6 @@ from joblib import Parallel, delayed  # type: ignore
 from openfermioncirq.experiments.hfvqe.objective import \
     RestrictedHartreeFockObjective
 from openfermioncirq.experiments.hfvqe.circuits import rhf_params_to_matrix
-# pylint: disable=C
 
 
 def get_one_body_fermion_operator(coeff_matrix):  # testpragma: no cover

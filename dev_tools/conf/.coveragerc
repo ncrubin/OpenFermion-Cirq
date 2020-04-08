@@ -3,7 +3,7 @@
 # Note: this means coverage must be run from the repo root.
 # Failure to do so will result in false positives.
 include = ./*
-omit = *_test.py
+omit = *_test.py  molecular_data_constructor_test.py
 
 [report]
 exclude_lines =

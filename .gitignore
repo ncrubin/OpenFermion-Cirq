@@ -31,3 +31,6 @@ docs/_build
 
 # psi4 dat files
 *.dat
+
+# macfles
+*.DS_Store

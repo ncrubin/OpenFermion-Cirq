@@ -1,4 +1,5 @@
 from typing import Iterable, Optional, List, Tuple
+import copy
 import numpy as np
 from scipy.linalg import expm
 
@@ -18,8 +19,8 @@ def generate_permutations(n_orbitals: int,
 
 
 def swap_forward(iterable_item: Iterable,
-                 starting_index: Optional[int]=0):
-    new_sequence = iterable_item.copy()
+                 starting_index: Optional[int] = 0):
+    new_sequence = copy.deepcopy(iterable_item)
     for i in range(starting_index, len(iterable_item) - 1, 2):
         new_sequence[i + 1], new_sequence[i] = \
             new_sequence[i], new_sequence[i + 1]
