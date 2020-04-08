@@ -32,5 +32,5 @@ docs/_build
 # psi4 dat files
 *.dat
 
-# macfles
+# macfiles
 *.DS_Store
