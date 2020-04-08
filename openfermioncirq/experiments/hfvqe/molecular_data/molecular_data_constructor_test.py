@@ -1,5 +1,6 @@
-from hfvqe.molecular_data_construction import h_n_linear_molecule
+# pylint: disable=C
 import pytest
+from openfermioncirq.experiments.hfvqe.molecular_data.molecular_data_construction import h_n_linear_molecule
 
 
 def test_negative_n_hydrogen_chain():

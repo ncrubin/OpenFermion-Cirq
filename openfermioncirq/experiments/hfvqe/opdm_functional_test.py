@@ -1,10 +1,13 @@
 import cirq
+
 import numpy as np
+
+import pytest
+
 from openfermioncirq.experiments.hfvqe.opdm_functionals import (RDMGenerator,
                                                                 OpdmFunctional)
 from openfermioncirq.experiments.hfvqe.analysis import compute_opdm
 from openfermioncirq.experiments.hfvqe.molecular_example import make_h6_1_3
-import pytest
 
 
 @pytest.mark.skip(reason='long-running systems test')
@@ -38,7 +41,6 @@ def test_opdm_func_vals():
                       rhf_objective.energy_from_opdm(opdm_from_data))
 
     rdm_gen = RDMGenerator(opdm_func)
-
-    opdm = rdm_gen.opdm_generator(parameters)
+    rdm_gen.opdm_generator(parameters)
     assert len(rdm_gen.noisy_opdms) == 1
     assert len(rdm_gen.variance_dicts) == 1

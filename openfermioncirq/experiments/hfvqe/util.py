@@ -6,9 +6,11 @@ from scipy.linalg import expm
 def generate_permutations(n_orbitals: int,
                           no_truncation: Optional[bool] = False):
     qubit_orderings = [list(range(n_orbitals))]
-    for i in range(n_orbitals // 2):
-        qubit_orderings.append(swap_forward(qubit_orderings[-1], starting_index=0))
-        qubit_orderings.append(swap_forward(qubit_orderings[-1], starting_index=1))
+    for _ in range(n_orbitals // 2):
+        qubit_orderings.append(swap_forward(qubit_orderings[-1],
+                                            starting_index=0))
+        qubit_orderings.append(swap_forward(qubit_orderings[-1],
+                                            starting_index=1))
     if no_truncation:
         return qubit_orderings
     else:
@@ -19,7 +21,8 @@ def swap_forward(iterable_item: Iterable,
                  starting_index: Optional[int]=0):
     new_sequence = iterable_item.copy()
     for i in range(starting_index, len(iterable_item) - 1, 2):
-        new_sequence[i + 1], new_sequence[i] = new_sequence[i], new_sequence[i + 1]
+        new_sequence[i + 1], new_sequence[i] = \
+            new_sequence[i], new_sequence[i + 1]
     return new_sequence
 
 

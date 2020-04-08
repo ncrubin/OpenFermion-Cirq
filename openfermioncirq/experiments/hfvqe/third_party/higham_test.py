@@ -27,6 +27,7 @@
 # CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+# pylint: disable=C
 from itertools import product
 import numpy as np
 import pytest
@@ -59,7 +60,7 @@ def test_higham_root():
     np.random.seed(42)
     mat = np.random.random((dim, dim))
     mat = 0.5 * (mat + mat.T)
-    w, v = np.linalg.eigh(mat)
+    w, _ = np.linalg.eigh(mat)
     target_trace = np.round(w[-1]-1)
     sigma = higham_root(w, target_trace)
     assert np.isclose(higham_polynomial(w, shift=sigma), target_trace)

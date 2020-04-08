@@ -9,6 +9,7 @@ from scipy.linalg import expm
 from openfermion import slater_determinant_preparation_circuit
 
 from openfermioncirq.experiments.hfvqe import util
+# pylint: disable=C
 
 
 def rhf_params_to_matrix(parameters: np.ndarray, num_qubits: int,
@@ -134,7 +135,7 @@ def circuits_with_measurements(qubits, circuits, clean_xxyy = False):  # testpra
     measure_labels = ['z', 'xy_even', 'xy_odd']
     all_circuits_with_measurements = {label: {} for label in measure_labels}
     for circuit_index in range(len(circuits)):
-        for measure_index, label in enumerate(measure_labels):
+        for _, label in enumerate(measure_labels):
             circuit = deepcopy(circuits[circuit_index])
             if label == 'xy_even':
                 circuit.append(xxyy_basis_rotation(even_pairs,

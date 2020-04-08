@@ -1,3 +1,4 @@
+import pytest
 import cirq
 import numpy as np
 import scipy as sp
@@ -9,7 +10,7 @@ from openfermioncirq.experiments.hfvqe.circuits import (
                             ryxxy4,
                             xxyy_basis_rotation,
                             prepare_slater_determinant)
-import pytest
+# pylint: disable=C
 
 
 def test_rhf_params_to_matrix():
@@ -104,7 +105,7 @@ def test_prepare_slater():
     u = sp.linalg.expm(kappa)
 
     with pytest.raises(ValueError):
-        vals = list(prepare_slater_determinant(qubits, u[:, :2].T, clean_ryxxy=5))
+        list(prepare_slater_determinant(qubits, u[:, :2].T, clean_ryxxy=5))
 
     test_circuit = cirq.Circuit(prepare_slater_determinant(qubits, u[:, :2].T))
     true_moments = [cirq.Moment(operations=[

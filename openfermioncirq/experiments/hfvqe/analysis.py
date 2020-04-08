@@ -6,6 +6,7 @@ from openfermion.ops import InteractionRDM
 
 import openfermioncirq.experiments.hfvqe.util as ccu
 from openfermioncirq.experiments.hfvqe.objective import generate_hamiltonian
+# pylint: disable=C
 
 
 def kdelta(i: int, j: int):
@@ -72,7 +73,7 @@ def compute_opdm(results_dict: Dict, return_variance: Optional[bool] = False):  
                     even_cov_mat[ridx, cidx] /= len(data[q0_a])
 
             variance_dict['xy_even'][circuit_idx] = even_cov_mat
-            w, v = np.linalg.eigh(even_cov_mat * len(data[q0_a]))
+            w, _ = np.linalg.eigh(even_cov_mat * len(data[q0_a]))
             if not np.alltrue(w >= 0):
                 raise ValueError(
                     "covariance matrix for xy_even:{} not postiive semidefinite".format(
@@ -90,7 +91,7 @@ def compute_opdm(results_dict: Dict, return_variance: Optional[bool] = False):  
                     odd_cov_mat[ridx, cidx] /= len(data[q0_a])
 
             variance_dict['xy_odd'][circuit_idx] = odd_cov_mat
-            w, v = np.linalg.eigh(odd_cov_mat * len(data[q0_a]))
+            w, _ = np.linalg.eigh(odd_cov_mat * len(data[q0_a]))
             if not np.alltrue(w >= 0):
                 raise ValueError(
                     "covariance matrix for xy_odd:{} not postiive semidefinite".format(
@@ -143,7 +144,7 @@ def covariance_construction_from_opdm(opdm: np.ndarray,
                                                    cov_func(j, i, p, q) +
                                                    cov_func(j, i, q, p))
 
-        w, v = np.linalg.eigh(even_cov_mat)
+        w, _ = np.linalg.eigh(even_cov_mat)
         if not np.alltrue(w >= 0):
             raise ValueError(
                 "covariance matrix for xy_even:{} not postiive semidefinite".format(
@@ -159,7 +160,7 @@ def covariance_construction_from_opdm(opdm: np.ndarray,
                                                   cov_func(i, j, q, p) +
                                                   cov_func(j, i, p, q) +
                                                   cov_func(j, i, q, p))
-        w, v = np.linalg.eigh(odd_cov_mat)
+        w, _ = np.linalg.eigh(odd_cov_mat)
         if not np.alltrue(w >= 0):
             raise ValueError(
                 "covariance matrix for xy_odd:{} not postiive semidefinite".format(
@@ -173,7 +174,7 @@ def covariance_construction_from_opdm(opdm: np.ndarray,
             for ridx, i in enumerate(range(num_qubits)):
                 for cidx, p in enumerate(range(num_qubits)):
                     z_cov_mat[ridx, cidx] = cov_func(i, i, p, p)
-            w, v = np.linalg.eigh(z_cov_mat)
+            w, _ = np.linalg.eigh(z_cov_mat)
             if not np.alltrue(w >= -1.0E-15):
                 raise ValueError(
                     "covariance matrix for z:{} not postiive semidefinite".format(

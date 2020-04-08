@@ -10,29 +10,30 @@ in most electronic structure codes because the Hamiltonian (or orbitals)
 are always rotated to the $kappa=0$ point after updating the parameters in
 $kappa$.
 """
+from itertools import product
 
 import cirq
 
-from openfermioncirq.experiments.hfvqe.circuits import prepare_slater_determinant
+import numpy as np
+
+import scipy as sp
+
+import openfermion as of
+
+from openfermioncirq.experiments.hfvqe.circuits import \
+    prepare_slater_determinant
 from openfermioncirq.experiments.hfvqe.objective import get_matrix_of_eigs
 from openfermioncirq.experiments.hfvqe.circuits import rhf_params_to_matrix
 from openfermioncirq.experiments.hfvqe.molecular_example import make_h6_1_3
 
-from itertools import product
 
-import numpy as np
-
-import openfermion as of
-from openfermion.ops import FermionOperator
-
-import scipy as sp
 
 
 def get_opdm(wf, num_orbitals, transform=of.jordan_wigner):
     opdm_hw = np.zeros((num_orbitals, num_orbitals),
                        dtype=np.complex128)
     creation_ops = [
-        of.get_sparse_operator(transform(FermionOperator(((p, 1)))),
+        of.get_sparse_operator(transform(of.FermionOperator(((p, 1)))),
                                n_qubits=num_orbitals)
         for p in range(num_orbitals)
     ]
@@ -49,7 +50,7 @@ def test_global_gradient_h4():
     Test the gradient at the solution given by psi4
     """
     # first get molecule
-    rhf_objective, molecule, params, obi, tbi = make_h6_1_3()
+    rhf_objective, molecule, params, _, _ = make_h6_1_3()
     # molecule = h4_linear_molecule(1.0)
     nocc = molecule.n_electrons // 2
     occ = list(range(nocc))

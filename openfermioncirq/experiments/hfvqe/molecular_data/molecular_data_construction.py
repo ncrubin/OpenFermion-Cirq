@@ -1,15 +1,20 @@
 """
 Construct MolecularData objects for various molecules
 """
+# pylint: disable=C
 from typing import Optional
 
 import openfermion as of
-import psi4
+
+import psi4  # type: ignore
+
 import numpy as np
+
 import scipy as sp
-from hfvqe.molecular_data_construction import get_ao_integrals
-from openfermionpsi4 import run_psi4
-from openfermionpsi4._run_psi4 import create_geometry_string
+
+
+from openfermionpsi4 import run_psi4  # type: ignore
+from openfermionpsi4._run_psi4 import create_geometry_string  # type: ignore
 from openfermion.hamiltonians import MolecularData
 
 from openfermioncirq.experiments.hfvqe.objective import generate_hamiltonian, \
@@ -107,7 +112,7 @@ def get_ao_integrals(molecule: MolecularData,
 
 def make_rhf_objective(molecule: of.MolecularData):
     S, Hcore, TEI = get_ao_integrals(molecule)
-    evals, X = sp.linalg.eigh(Hcore, S)
+    _, X = sp.linalg.eigh(Hcore, S)
 
     obi = of.general_basis_change(Hcore, X, (1, 0))
     tbi = np.einsum('psqr', of.general_basis_change(TEI, X, (1, 0, 1, 0)))

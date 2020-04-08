@@ -1,6 +1,7 @@
+
+from itertools import product
 import numpy as np
 import scipy as sp
-from itertools import product
 from openfermioncirq.experiments.hfvqe.circuits import rhf_params_to_matrix
 from openfermioncirq.experiments.hfvqe.analysis import (
     trace_distance,
@@ -12,6 +13,7 @@ from openfermioncirq.experiments.hfvqe.analysis import (
     )
 from openfermioncirq.experiments.hfvqe.molecular_example import make_h6_1_3
 from openfermioncirq.experiments.hfvqe.gradient_hf import rhf_func_generator
+# pylint: disable=C
 
 
 def test_kdelta():
@@ -30,7 +32,7 @@ def test_energy_from_opdm():
     """Build test assiming sampling functions work"""
 
     rhf_objective, molecule, parameters, obi, tbi = make_h6_1_3()
-    unitary, energy, gradient = rhf_func_generator(rhf_objective)
+    unitary, energy, _ = rhf_func_generator(rhf_objective)
 
     parameters = np.array([0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
     initial_opdm = np.diag([1] * 3 + [0] * 3)
@@ -55,7 +57,7 @@ def test_mcweeny():
         opdm[i, j] += np.random.randn() * 1.0E-3
     opdm = 0.5 * (opdm + opdm.T)
     pure_opdm = mcweeny_purification(opdm)
-    w, v = np.linalg.eigh(pure_opdm)
+    w, _ = np.linalg.eigh(pure_opdm)
     assert len(np.where(w < -1.0E-9)[0]) == 0
 
 

@@ -5,6 +5,7 @@ from openfermion.ops import InteractionOperator, InteractionRDM
 from openfermion.utils import wedge
 from openfermion.transforms import get_fermion_operator
 from openfermioncirq.experiments.hfvqe.circuits import rhf_params_to_matrix
+# pylint: disable=C
 
 
 def get_matrix_of_eigs(w: np.ndarray) -> np.ndarray:

@@ -28,3 +28,6 @@ __pycache__
 # ignore Sphinx build
 docs/generated
 docs/_build
+
+# psi4 dat files
+*.dat

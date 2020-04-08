@@ -4,6 +4,7 @@ An implementation of gradient based Restricted-Hartree-Fock
 This uses a bunch of the infrastructure already used in the experiment
 should only need an RHF_object.
 """
+# pylint: disable=C
 from typing import Optional, Union
 import numpy as np
 import scipy as sp
@@ -61,7 +62,7 @@ def rhf_minimization(rhf_object, method='CG', initial_guess=None, verbose=True):
     :param method: (optional sp opt method)
     :return: sp result object
     """
-    ansatz, energy, gradient = rhf_func_generator(rhf_object)
+    _, energy, gradient = rhf_func_generator(rhf_object)
     if initial_guess is None:
         init_guess = np.zeros(rhf_object.nocc * rhf_object.nvirt)
     else:

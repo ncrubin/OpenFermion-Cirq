@@ -29,7 +29,7 @@ def make_h6_1_3() -> Tuple[RestrictedHartreeFockObjective,
     Hcore = np.load(os.path.join(h6_1_3_path, 'h_core.npy'))
     TEI = np.load(os.path.join(h6_1_3_path, 'tei.npy'))
 
-    evals, X = sp.linalg.eigh(Hcore, S)
+    _, X = sp.linalg.eigh(Hcore, S)
     obi = of.general_basis_change(Hcore, X, (1, 0))
     tbi = np.einsum('psqr', of.general_basis_change(TEI, X, (1, 0, 1, 0)))
     molecular_hamiltonian = generate_hamiltonian(obi, tbi,

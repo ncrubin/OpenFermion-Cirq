@@ -8,7 +8,7 @@ import openfermioncirq.experiments.hfvqe.util as ccu
 from openfermioncirq.experiments.hfvqe.objective import rhf_params_to_matrix
 
 
-class RDMGenerator():
+class RDMGenerator():  # testpragma: no cover
     def __init__(self, blackbox, purification: Optional[bool]=True):
         self.blackbox = blackbox
         self.noisy_opdms = []
@@ -24,7 +24,7 @@ class RDMGenerator():
         return opdm
 
 
-class OpdmFunctional():
+class OpdmFunctional():  # testpragma: no cover
     def __init__(self, qubits: List[cirq.Qid],
                  sampler: cirq.Sampler,
                  constant: float,
@@ -97,7 +97,8 @@ class OpdmFunctional():
                 data = self.sampler.run(circuit, repetitions=self.num_samples)
                 if self.post_selection:
                     # PostSelect the data
-                    good_indices = np.where(np.sum(np.array(data.data), axis=1) ==
+                    good_indices = \
+                        np.where(np.sum(np.array(data.data), axis=1) ==
                                             self.num_electrons)[0]
                     good_data = data.data[data.data.index.isin(good_indices)]
                     data_dict[measure_type][circuit_index] = good_data
