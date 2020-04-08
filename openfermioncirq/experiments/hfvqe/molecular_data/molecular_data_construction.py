@@ -6,19 +6,36 @@ from typing import Optional
 
 import openfermion as of
 
-import psi4  # type: ignore
+NO_PSI4 = False
+try:
+    import psi4  # type: ignore
+except ImportError:
+    NO_PSI4 = True
 
 import numpy as np
 
 import scipy as sp
 
+NO_OFPSI4 = False
+try:
+    from openfermionpsi4 import run_psi4  # type: ignore
+    from openfermionpsi4._run_psi4 import create_geometry_string  # type: ignore
+except ImportError:
+    NO_OFPSI4 = True
 
-from openfermionpsi4 import run_psi4  # type: ignore
-from openfermionpsi4._run_psi4 import create_geometry_string  # type: ignore
 from openfermion.hamiltonians import MolecularData
 
 from openfermioncirq.experiments.hfvqe.objective import generate_hamiltonian, \
     RestrictedHartreeFockObjective
+
+
+class NOOFPsi4Error(Exception):
+    pass
+
+
+class NOPsi4Error(Exception):
+    pass
+
 
 
 def _h_n_linear_geometry(bond_distance: float, n_hydrogens: int):
@@ -38,8 +55,12 @@ def h_n_linear_molecule(bond_distance: float, n_hydrogens: int,
         multiplicity=1,
         description=f"linear_r-{bond_distance}",
     )
+    if NO_OFPSI4:
+        raise NOOFPsi4Error("openfermion-psi4 is not installed")
+
     molecule = run_psi4(molecule, run_fci=False, run_mp2=False, run_cisd=False,
                         run_ccsd=False, delete_input=False, delete_output=False)
+
     return molecule
 
 
@@ -83,6 +104,9 @@ def get_ao_integrals(molecule: MolecularData,
     :param molecule:
     :return:
     """
+    if NO_PSI4:
+        raise NOPsi4Error("Psi4 is not installed")
+
     psi4.core.be_quiet()
     allocated_ram_gb = 0.5
     psi4.set_memory(f"{allocated_ram_gb} GB")
