@@ -99,7 +99,6 @@ def test_xxyy_basis_rotation():
     assert test_rotation == true_rotation
 
 
-@pytest.mark.skip(reason="need improved circuit compare")
 def test_prepare_slater():
     qubits = cirq.LineQubit.range(4)
     kappa = rhf_params_to_matrix(np.array([0.1, 0.2, 0.3, 0.4]), 4)
@@ -144,7 +143,7 @@ def test_prepare_slater():
     ]), cirq.Moment(operations=[
         cirq.rz(np.pi * 1.0).on(cirq.LineQubit(1)),
     ])]
-    assert true_moments == test_circuit._moments
+    assert cirq.approx_eq(true_moments, test_circuit._moments, atol=1e-8)
 
     test_circuit = cirq.Circuit(prepare_slater_determinant(qubits, u[:, :2].T,
                                                            clean_ryxxy=2))
@@ -191,7 +190,7 @@ def test_prepare_slater():
     ]), cirq.Moment(operations=[
         cirq.rz(np.pi * 1.0).on(cirq.LineQubit(1)),
     ])]
-    assert true_circuit == test_circuit._moments
+    assert cirq.approx_eq(true_circuit, test_circuit._moments, atol=1e-8)
 
     test_circuit = cirq.Circuit(prepare_slater_determinant(qubits, u[:, :2].T,
                                                            clean_ryxxy=3))
@@ -243,7 +242,8 @@ def test_prepare_slater():
         cirq.rz(np.pi * 1.0208333333333333).on(cirq.LineQubit(1)),
         cirq.rz(np.pi * 0.020833333333333332).on(cirq.LineQubit(2)),
     ])]
-    assert true_circuit == test_circuit._moments
+    assert cirq.approx_eq(true_circuit, test_circuit._moments, atol=1e-8)
+
 
     test_circuit = cirq.Circuit(prepare_slater_determinant(qubits, u[:, :2].T,
                                                            clean_ryxxy=4))
@@ -295,4 +295,5 @@ def test_prepare_slater():
         cirq.rz(np.pi * 1.0208333333333333).on(cirq.LineQubit(1)),
         cirq.rz(np.pi * 0.020833333333333332).on(cirq.LineQubit(2)),
     ])]
-    assert true_circuit == test_circuit._moments
+    assert cirq.approx_eq(true_circuit, test_circuit._moments, atol=1e-8)
+
