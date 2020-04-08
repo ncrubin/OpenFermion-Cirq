@@ -12,6 +12,7 @@ from openfermioncirq.experiments.hfvqe.molecular_example import make_h6_1_3
 
 @pytest.mark.skip(reason='long-running systems test')
 def test_opdm_func_vals():
+    # coverage: ignore
     rhf_objective, molecule, parameters, obi, tbi = make_h6_1_3()
     qubits = [cirq.GridQubit(0, x) for x in range(molecule.n_orbitals)]
     np.random.seed(43)

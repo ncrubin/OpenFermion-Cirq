@@ -1,9 +1,12 @@
+# coverage: ignore
 """
 Implement the H2-experiment with OpenFermion and OpenFermion-Cirq
 """
 # Numerical Imports
 import numpy
+
 import scipy
+
 import os
 
 from openfermion.ops import general_basis_change
@@ -21,6 +24,7 @@ from openfermioncirq.experiments.hfvqe.objective import \
 
 
 def make_rhf_objective(molecule):
+    # coverage: ignore
     S, Hcore, TEI = get_ao_integrals(molecule)
     evals, X = scipy.linalg.eigh(Hcore, S)
 
@@ -36,6 +40,7 @@ def make_rhf_objective(molecule):
 
 
 if __name__ == "__main__":
+    # coverage: ignore
     # make simulations
     molecule_generator = {6: h6_linear_molecule,
                           8: h8_linear_molecule,

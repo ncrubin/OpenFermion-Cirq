@@ -1,7 +1,8 @@
+# pylint: disable=C
+# coverage: ignore
 """
 Construct MolecularData objects for various molecules
 """
-# pylint: disable=C
 from typing import Optional
 
 import openfermion as of
@@ -37,8 +38,8 @@ class NOPsi4Error(Exception):
     pass
 
 
-
 def _h_n_linear_geometry(bond_distance: float, n_hydrogens: int):
+    # coverage: ignore
     """Create a geometry of evenly-spaced hydrogen atoms along the Z-axis
     appropriate for consumption by MolecularData."""
     return [('H', (0, 0, i * bond_distance)) for i in range(n_hydrogens)]
@@ -46,6 +47,7 @@ def _h_n_linear_geometry(bond_distance: float, n_hydrogens: int):
 
 def h_n_linear_molecule(bond_distance: float, n_hydrogens: int,
                         basis: str = 'sto-3g'):
+    # coverage: ignore
     if n_hydrogens < 1 or n_hydrogens % 2 != 0:
         raise ValueError('Must specify a positive, even number of hydrogens.')
     molecule = MolecularData(
@@ -66,6 +68,7 @@ def h_n_linear_molecule(bond_distance: float, n_hydrogens: int,
 
 def h2_molecule(bond_distance: float,
                 basis: Optional[str]='sto-3g'):
+    # coverage: ignore
     return h_n_linear_molecule(bond_distance, n_hydrogens=2, basis=basis)  # testpragma: no cover
 
 

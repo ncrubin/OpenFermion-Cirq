@@ -1,4 +1,5 @@
 # pylint: disable=C
+# coverage: ignore
 from typing import Callable, List, Optional, Tuple
 from itertools import product
 import time
@@ -17,6 +18,7 @@ from openfermioncirq.experiments.hfvqe.circuits import rhf_params_to_matrix
 
 
 def get_one_body_fermion_operator(coeff_matrix):  # testpragma: no cover
+    # coverage: ignore
     operator = FermionOperator()
     for i, j in product(range(coeff_matrix.shape[0]), repeat=2):
         operator += coeff_matrix[i, j] * FermionOperator(((i, 1), (j, 0)))
@@ -24,6 +26,7 @@ def get_one_body_fermion_operator(coeff_matrix):  # testpragma: no cover
 
 
 def kdelta(i: int, j: int) -> float:  # testpragma: no cover
+    # coverage: ignore
     """Delta function function"""
     return 1.0 if i == j else 0.0
 
@@ -32,6 +35,7 @@ def group_action(old_unitary: np.ndarray,
                  new_parameters: np.ndarray,
                  occ: List[int],
                  virt: List[int]) -> np.ndarray:  # testpragma: no cover
+    # coverage: ignore
     """
     U(e^{kappa}) . U(e^{kappa'}) = U(e^{kappa}.e^{kappa'})
 
@@ -50,6 +54,7 @@ def group_action(old_unitary: np.ndarray,
 
 def non_redundant_rotation_generators(
         rhf_objective: RestrictedHartreeFockObjective) -> List[FermionOperator]:  # testpragma: no cover
+    # coverage: ignore
     """
     Generate the fermionic representation of all non-redundant rotation
     generators for restricted Hartree-fock
@@ -76,6 +81,7 @@ def get_dvec_hmat(rotation_generators: List[FermionOperator],
                   rhf_objective: RestrictedHartreeFockObjective,
                   rdms: InteractionRDM,
                   diagonal_hessian=False) -> (np.ndarray, np.ndarray):  # testpragma: no cover
+    # coverage: ignore
     """
     Generate first and second terms of the BCH expansion
 
@@ -96,6 +102,7 @@ def get_dvec_hmat(rotation_generators: List[FermionOperator],
 
     def single_commutator_einsum(idx: int,
                                  rot_gen: FermionOperator) -> Tuple[int, float]:  # testpragma: no cover
+        # coverage: ignore
         """
         Evaluate <psi|[H, p^q - q^p]|psi>
 
@@ -143,6 +150,7 @@ def get_dvec_hmat(rotation_generators: List[FermionOperator],
 
     def double_commutator_einsum(ridx: int, rgen: FermionOperator,
                                  sidx: int, sgen: FermionOperator) -> Tuple[int, int, float]:  # testpragma: no cover
+        # coverage: ignore
         """
         Evaluate <psi|[[H, p^q - q^p], r^s - s^r]|psi>
 
@@ -313,6 +321,7 @@ def moving_frame_augmented_hessian_optimizer(rhf_objective: RestrictedHartreeFoc
                                              delta: Optional[float]=0.03,
                                              verbose: Optional[bool]=True,
                                              hessian_update: Optional[bool]='diagonal'):  # testpragma: no cover
+    # coverage: ignore
     """
     The moving frame optimizer
 
